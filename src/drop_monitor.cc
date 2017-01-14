@@ -98,8 +98,10 @@ int main()
         if (!rx_ctx.kcache && kcache_future.valid()
             && kcache_future.wait_for(std::chrono::milliseconds(0)) == std::future_status::ready) {
             rx_ctx.kcache = std::move(kcache_future.get());
-            if (!rx_ctx.kcache || !*rx_ctx.kcache)
+            if ((!rx_ctx.kcache || !*rx_ctx.kcache) && !rx_ctx.dwarf) {
+                fprintf(stderr, "kallsyms and dwarf lookup not available. Terminating.");
                 break;
+            }
         }
 
         if (!dropmon.try_rx())
