@@ -73,6 +73,10 @@ private:
         int nscopes = dwarf_getscopes(cudie, addr - bias, &scopes);
         if (nscopes <= 0) {
             fprintf(stderr, "dwarf_getscopes FAILED %d\n", nscopes);
+
+            // int nscopes_die = dwarf_getscopes_die(cudie, &scopes);
+            // fprintf(stderr, "dwarf_getscopes_die -> %d\n", nscopes_die);
+
             return std::make_pair(std::string(), std::string());
         }
 

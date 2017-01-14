@@ -19,3 +19,7 @@ drop_monitor_SOURCES = drop_monitor.cc netlink_dropmon.cc kallsyms_lookup.cc dwa
 kallsyms_lookup_LDFLAGS = -pthread
 kallsyms_dump_SOURCES = kallsyms_lookup.cc kallsyms_dump.cc
 libdwfl_test_SOURCES = libdwfl_test.cc dwarf_lookup.cc
+
+#all:
+#	echo $(LIBS)
+#	echo $(libnl3_LIBS)
