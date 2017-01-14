@@ -1,2 +1,16 @@
+*.o
 drop_monitor
 kallsyms_dump
+libdwfl_test
+aclocal.m4
+autom4te.cache/
+compile
+configure
+config.log
+config.status
+depcomp
+install-sh
+Makefile
+Makefile.in
+missing
+src/.deps/
