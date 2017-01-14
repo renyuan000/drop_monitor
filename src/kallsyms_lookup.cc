@@ -92,6 +92,11 @@ kallsyms_cache::kallsyms_cache()
                 // Symbol was moved, get again. Avoid copy in general(no duplicate) case.
                 sym_data = get_sym(data, line_length);
                 // printf("%zu: dup(\"%s\")\n", line, sym_data.second.c_str());
+                if(line >= 10 && cache.size() <= 1 && sym_data.first == 0) {
+                    fprintf(stderr, "reading /proc/kallsyms failed. kptr_restrict=1? Try again with root privileges\n");
+                    cache.clear();
+                    return false;
+                }
                 dbg_dup++;
                 auto &old_sym = insert.first->second;
                 old_sym.replace(old_sym.find('\0'), 1, 1, '/');
