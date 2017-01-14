@@ -3,7 +3,7 @@
 
 AC_PREREQ([2.69])
 AC_INIT(drop_monitor, 0.1, wr0112358@gmail.com)
-AC_INIT_AUTOMAKE(drop_monitor, 0.1)
+AM_INIT_AUTOMAKE(drop_monitor, 0.1)
 
 AC_CONFIG_SRCDIR([src/dwarf_lookup.cc])
 AC_CONFIG_HEADERS([config.h])
