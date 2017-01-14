@@ -11,7 +11,7 @@
 
 struct dwarf_lookup::dwarf_lookup_impl {
     dwarf_lookup_impl(const char *debuginfo_path_)
-        : debuginfo_path(strdup(debuginfo_path_))
+        : debuginfo_path(strdup(debuginfo_path_ ? debuginfo_path_ :"/usr/lib/debug/lib/modules"))
     {
         memset(&callbacks, 0, sizeof(callbacks));
         callbacks.find_debuginfo = dwfl_standard_find_debuginfo;

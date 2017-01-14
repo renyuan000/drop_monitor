@@ -1,5 +1,6 @@
 
 #include <csignal>
+#include <cstring>
 #include <future>
 #include <poll.h>
 
@@ -15,7 +16,8 @@ void sighandler(int)
 }
 
 struct receiver_ctx {
-    receiver_ctx()
+    receiver_ctx(const char *debuginfo_path)
+        : dwarf(debuginfo_path)
     {
         dwarf_ok = dwarf;
         if (!dwarf_ok)
@@ -63,8 +65,19 @@ struct receiver_ctx {
     bool dwarf_ok = dwarf;
 };
 
-int main()
+int main(int argc, char *argv[])
 {
+    const char *debuginfo_path = nullptr;
+    if(argc > 1) {
+        for(int i = 1; i < argc; i++) {
+            if(strcmp(argv[i], "--help") == 0) {
+                printf("%s: [--debuginfo-path=PATH] [--help]\n", argv[0]);
+                return 0;
+            } else if(strcmp(argv[i], "--debuginfo-path") == 0 && argc >= (++i)) {
+                debuginfo_path = argv[i];
+            }
+        }
+    }
     struct sigaction sa;
     sigemptyset(&sa.sa_mask);
     sa.sa_handler = sighandler;
@@ -73,7 +86,7 @@ int main()
         perror("sigaction");
 
     auto kcache_future = std::async(std::launch::async, []() { return make_unique<kallsyms_cache>(); });
-    receiver_ctx rx_ctx;
+    receiver_ctx rx_ctx(debuginfo_path);
 
     drop_mon_t dropmon(std::bind(&receiver_ctx::rx_callback, &rx_ctx, std::placeholders::_1, std::placeholders::_2));
     if (dropmon.get_fd() == -1)

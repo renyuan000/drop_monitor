@@ -4,7 +4,7 @@
 #include <string>
 
 struct dwarf_lookup {
-    dwarf_lookup(const char *debuginfo_path = "/usr/lib/debug/lib/modules");
+    dwarf_lookup(const char *debuginfo_path = nullptr);
     ~dwarf_lookup();
     operator bool() const;
 
