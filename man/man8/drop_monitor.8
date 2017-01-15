@@ -2,12 +2,14 @@
 .SH NAME
 drop_monitor
 .SH SYNOPSIS
-.B drop_monitor
+.B drop_monitor [--debuginfo-path PATH] [--help]
 .SH DESCRIPTION
+drop_monitor reads events from linux kernel drop_monitor and displays symbols and Dwarf DIEs for given addresses.
 .SH REQUIREMENTS
+CONFIG_NET_DROP_MONITOR, libnl-3.0, libnl-genl-3.0, libdw(elfutils).
 .SH OPTIONS
 .TP
-\-h
-.SH EXAMPLES
+\--debuginfo-path PATH
+Search path for separate debuginfo files
 .SH AUTHOR
 Wolfgang Reiter
