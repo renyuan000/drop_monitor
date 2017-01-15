@@ -7,6 +7,8 @@ drop_monitor
 drop_monitor reads events from linux kernel drop_monitor and displays symbols and Dwarf DIEs for given addresses.
 .SH REQUIREMENTS
 CONFIG_NET_DROP_MONITOR, libnl-3.0, libnl-genl-3.0, libdw(elfutils).
+
+Root privileges may be required to resolve addresses to symbols depending on kernel.kptr_restrict sysctl.
 .SH OPTIONS
 .TP
 \--debuginfo-path PATH
