@@ -57,3 +57,9 @@ have 117863 + 1727 = 119590 symbols
 0xffffffffc092c460 ieee80211_iface_work
 0xffffffffc092c870 ieee80211_netdev_select_queue
 ```
+
+# Build instructions
+```Shell
+./bootstrap.sh
+./configure && make
+```

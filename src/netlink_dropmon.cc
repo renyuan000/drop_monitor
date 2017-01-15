@@ -18,7 +18,7 @@ drop_mon_t::drop_mon_t(const std::function<void(void *, size_t)> &callback)
     sock = nl_socket_alloc();
     int err = genl_connect(sock);
     if (err < 0) {
-        puts(nl_geterror(err));
+        fprintf(stderr, "%s:%d: %s\n", __func__, __LINE__, nl_geterror(err));
         nl_socket_free(sock);
         sock = nullptr;
         return;
@@ -29,7 +29,7 @@ drop_mon_t::drop_mon_t(const std::function<void(void *, size_t)> &callback)
         nl_close(sock);
         nl_socket_free(sock);
         sock = nullptr;
-        puts(nl_geterror(family));
+        fprintf(stderr, "%s:%d: %s\n", __func__, __LINE__, nl_geterror(family));
         return;
     }
     nl_close(sock);
@@ -37,7 +37,7 @@ drop_mon_t::drop_mon_t(const std::function<void(void *, size_t)> &callback)
     nl_join_groups(sock, NET_DM_GRP_ALERT);
     err = nl_connect(sock, NETLINK_GENERIC);
     if (err < 0) {
-        puts(nl_geterror(err));
+        fprintf(stderr, "%s:%d: %s\n", __func__, __LINE__, nl_geterror(err));
         nl_socket_free(sock);
         sock = nullptr;
         return;
@@ -133,7 +133,7 @@ bool drop_mon_t::try_rx() const
                        ((nlmsgerr *)(NLMSG_DATA(nlhdr)))->error);
                 for (size_t i = 0; i < (unsigned)len; i++)
                     printf(" 0x%02x", ((unsigned char *)nlhdr)[i]);
-                puts("");
+                fprintf(stderr, "%s:\n", __func__);
             }
             else if (((nlmsgerr *)(NLMSG_DATA(nlhdr)))->error == 0)
                 ; //fprintf(stderr, "ACK\n");
@@ -187,7 +187,7 @@ bool drop_mon_t::try_rx() const
             //nlhdr = nlmsg_next(nlhdr, &len);
             // printf("%u/%d\n", nlhdr->nlmsg_len, len);
         } else {
-            puts("IGNORED");
+            fprintf(stderr, "%s: IGNORED\n", __func__);
         }
 
     }
@@ -207,7 +207,7 @@ bool drop_mon_t::send(int flags, uint8_t cmd)
         return false;
     const auto err = nl_send(sock, buf.get());
     if (err < 0) {
-        puts(nl_geterror(err));
+        fprintf(stderr, "%s:%d: %s\n", __func__, __LINE__, nl_geterror(err));
         return false;
     }
     seq++;

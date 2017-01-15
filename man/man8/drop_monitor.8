@@ -1,0 +1,17 @@
+.TH drop_monitor 8  "2017-01-01" "USER COMMANDS"
+.SH NAME
+drop_monitor
+.SH SYNOPSIS
+.B drop_monitor [--debuginfo-path PATH] [--help]
+.SH DESCRIPTION
+drop_monitor reads events from linux kernel drop_monitor and displays symbols and Dwarf DIEs for given addresses.
+.SH REQUIREMENTS
+CONFIG_NET_DROP_MONITOR, libnl-3.0, libnl-genl-3.0, libdw(elfutils).
+
+Root privileges may be required to resolve addresses to symbols depending on kernel.kptr_restrict sysctl.
+.SH OPTIONS
+.TP
+\--debuginfo-path PATH
+Search path for separate debuginfo files
+.SH AUTHOR
+Wolfgang Reiter

@@ -11,7 +11,7 @@
 
 struct dwarf_lookup::dwarf_lookup_impl {
     dwarf_lookup_impl(const char *debuginfo_path_)
-        : debuginfo_path(strdup(debuginfo_path_))
+        : debuginfo_path(strdup(debuginfo_path_ ? debuginfo_path_ :"/usr/lib/debug/lib/modules"))
     {
         memset(&callbacks, 0, sizeof(callbacks));
         callbacks.find_debuginfo = dwfl_standard_find_debuginfo;
@@ -73,6 +73,10 @@ private:
         int nscopes = dwarf_getscopes(cudie, addr - bias, &scopes);
         if (nscopes <= 0) {
             fprintf(stderr, "dwarf_getscopes FAILED %d\n", nscopes);
+
+            // int nscopes_die = dwarf_getscopes_die(cudie, &scopes);
+            // fprintf(stderr, "dwarf_getscopes_die -> %d\n", nscopes_die);
+
             return std::make_pair(std::string(), std::string());
         }
 
