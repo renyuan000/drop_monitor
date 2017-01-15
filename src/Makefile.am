@@ -1,5 +1,6 @@
 AM_CFLAGS = -Wall -Werror # -fsanitize=address
-bin_PROGRAMS = drop_monitor kallsyms_dump libdwfl_test
+bin_PROGRAMS = drop_monitor kallsyms_dump
+noinst_PROGRAMS = libdwfl_test
 
 drop_monitor_CXXFLAGS=$(libnl3_CFLAGS) $(libnl_genl3_CFLAGS) $(AM_CXXFLAGS) $(AM_CFLAGS)
 drop_monitor_LDFLAGS = $(libnl3_LIBS) $(libnl_genl3_LIBS) -pthread
