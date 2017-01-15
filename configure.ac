@@ -37,7 +37,7 @@ PKG_CHECK_MODULES([libnl_genl3], [libnl-genl-3.0 >= 3.2.3])
 
 AC_CHECK_LIB(nl-3, nl_socket_alloc,, [AC_MSG_ERROR([libnl-3.0 required but not found])])
 AC_CHECK_LIB(dw, dwfl_begin,, [AC_MSG_ERROR([libdw(elfutils) required but not found])])
-AC_CHECK_LIB(asan, __sanitizer_cov_init)
+#AC_CHECK_LIB(asan, __sanitizer_cov_init)
 
 # Checks for library functions.
 AC_CHECK_FUNCS([memchr memset strdup strerror strtoul])
